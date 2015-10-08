@@ -23,7 +23,7 @@ if(Meteor.isClient) {
   Template.mainContentScores.helpers({
     games: function() {
         var week = parseInt(Router.current().params.week);
-        return Games.find({ week: week });
+        return Games.find({ week: week }, { sort: { eid: 1 }});
     },
     scoreHomeClass: function(game) {
 
@@ -143,7 +143,7 @@ if(Meteor.isClient) {
   Template.mainContentPicks.helpers({
     games: function() {
       var week = parseInt(Router.current().params.week);
-      return Games.find({ week: week });
+      return Games.find({ week: week }, { sort: { gameId: 1 }});
     },
     getOdds: function(game) {
       var odd = Odds.findOne({ gameId: game.eid.toString() });
@@ -189,7 +189,7 @@ if(Meteor.isClient) {
   Template.mainContentOdds.helpers({
     games: function() {
       var week = parseInt(Router.current().params.week);
-      return Games.find({ week: week });
+      return Games.find({ week: week }, { sort: { gameId: 1 }});
     }
   });
 
@@ -285,7 +285,7 @@ if(Meteor.isClient) {
     'picks': function(userId) {
       var picks = [];
       var week = parseInt(Router.current().params.week);
-      var games = Games.find({ week: week });
+      var games = Games.find({ week: week }, { sort: { eid: 1 }});
       if(typeof games !== 'undefined') {
         games.forEach(function(d, i) {
           var pick = Picks.findOne({
