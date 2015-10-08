@@ -123,6 +123,10 @@ if(Meteor.isClient) {
     getStatus: function(status) {
       var statusStr = '';
       switch(status) {
+        case '1' : statusStr = '1st Quarter'; break;
+        case '2' : statusStr = '2nd Quarter'; break;
+        case '3' : statusStr = '3rd Quarter'; break;
+        case '4' : statusStr = '4th Quarter'; break;
         case 'F' : statusStr = 'Final'; break;
         case 'FO' : statusStr = 'Final (OT)'; break;
         case 'P' : statusStr = 'Pre-game'; break;
@@ -171,19 +175,22 @@ if(Meteor.isClient) {
   Template.mainContentPicks.rendered = function() {
     $('.ui.radio.checkbox').checkbox();
 
-    $(":radio").each(function(){
-      if(this.id.split('-')[0] === 'pick') {
-        var pick = Picks.findOne({
-          userId: Meteor.user()._id,
-          gameId: this.id.split('-')[1]
-        });
-        if(typeof pick !== 'undefined') {
-          if(this.id.split('-')[2] === pick.pick) {
-              $(this).prop("checked", true);
+    if(Meteor.user()) {
+      $(":radio").each(function(){
+        if(this.id.split('-')[0] === 'pick') {
+          var pick = Picks.findOne({
+            userId: Meteor.user()._id,
+            gameId: this.id.split('-')[1]
+          });
+          if(typeof pick !== 'undefined') {
+            if(this.id.split('-')[2] === pick.pick) {
+                $(this).prop("checked", true);
+            }
           }
         }
-      }
-    });
+      });
+    }
+
   };
 
   Template.mainContentOdds.helpers({
@@ -272,6 +279,36 @@ if(Meteor.isClient) {
    });
   };
 
+  Template.mainContentVersus.events({
+    'click .showPicks': function() {
+      var showPicks;
+      if(typeof Session.get('showPicks') !== 'undefined') {
+        showPicks = Session.get('showPicks');
+        console.log("showPicks found...", Session.get('showPicks'));
+        if(showPicks !== 'undefined') {
+          if(showPicks === false) {
+            Session.set('showPicks', true);
+            $('.ui.accordion').accordion('open', 0);
+          }
+          else if(showPicks === true) {
+            Session.set('showPicks', false);
+            $('.ui.accordion').accordion('close', 0);
+          }
+        }
+        else {
+          console.log("showPicks not found...");
+          Session.set('showPicks', true);
+          $('.ui.accordion').accordion('open', 0);
+        }
+      }
+      else {
+        console.log("showPicks not found...");
+        Session.set('showPicks', true);
+        $('.ui.accordion').accordion('open', 0);
+      }
+    }
+  });
+
   Template.mainContentVersus.helpers({
     'users': function() {
       var users = Meteor.users.find({}).fetch();
@@ -314,9 +351,6 @@ if(Meteor.isClient) {
         code = item.game.away.code;
       }
       return name + ' ('+ code +')';
-    },
-    getWinnerPercentage(userId) {
-        return Session.get(userId + '-percentage');
     },
     getWinner: function(item) {
       var code = item.pick.pick;
@@ -520,33 +554,46 @@ if(Meteor.isClient) {
       var stats = Session.get('stats'),
           percentage;
 
-      stats.forEach(function(d) {
-        if(d.id === userId) {
-          percentage = (d.win / (d.loss + d.win)) * 100;
-        }
-      });
+        if(stats) {
+          stats.forEach(function(d) {
+            if(d.id === userId) {
+              percentage = (d.win / (d.loss + d.win)) * 100;
+            }
+          });
+          return Math.ceil(percentage);
 
-      return Math.ceil(percentage);
+        } else {
+          return 0;
+        }
+
     },
     getFractions: function(userId) {
       var stats = Session.get('stats'),
           fractions;
 
-      stats.forEach(function(d) {
-        if(d.id === userId) {
-          var totalGames = d.loss + d.win;
-          fractions = d.win + ' / ' + totalGames;
-        }
-      });
-
-      return fractions;
+      if(stats) {
+        stats.forEach(function(d) {
+          if(d.id === userId) {
+            var totalGames = d.loss + d.win;
+            fractions = d.win + ' / ' + totalGames;
+          }
+        });
+        return fractions;
+      }
+      else {
+        return '- / -';
+      }
     }
   });
 
   Template.mainContentVersus.rendered = function() {
 
-    $('.ui.accordion').accordion('open', 0);
-
+    if(typeof Session.get('showPicks') !== 'undefined') {
+      showPicks = Session.get('showPicks');
+      if(showPicks === true) {
+          $('.ui.accordion').accordion('open', 0);
+      }
+    }
 
     var pickIds = $.map($(".picks > .item"), function(n, i){
       return n.id.split('-')[1];
@@ -582,7 +629,6 @@ if(Meteor.isClient) {
      });
 
      if(i === users.length -1) {
-       console.log("stats:", stats);
        Session.set('stats', stats);
      }
     });

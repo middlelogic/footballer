@@ -1,26 +1,12 @@
 <template name="mainContentVersus">
   <div class="ui clearing">
-      <h3 class="ui header">Versus</h3>
-      <br />
-      <!-- <form class="ui form">
-        <div class="fields">
-          <div class="field">
-            <label>Player 1</label>
-            <select class="ui dropdown dropdownMenu">
-              <option>Rachel</option>
-              <option>Tim</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Player 2</label>
-            <select class="ui dropdown dropdownMenu">
-              <option>Rachel</option>
-              <option>Tim</option>
-            </select>
-          </div>
-        </div>
-      </form> -->
+    <h3 class="ui left floated header">Versus</h3>
+    <button class="ui right floated tiny button primary showPicks">
+      Show Picks
+    </button>
+    <br /><br />
   </div>
+  <div class="ui divider"></div>
   <div class="ui two cards">
     {{#each users}}
     <div class="ui {{color}} card">

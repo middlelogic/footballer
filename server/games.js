@@ -60,7 +60,7 @@ Meteor.methods({
     cb({ success: true });
   },
   getGameData: function () {
-    // console.log("Getting Game data...");
+    console.log("Getting Game data...");
     var response, data, res;
     try {
         var data = request.sync("http://www.nfl.com/liveupdate/scorestrip/ss.json");
