@@ -24,12 +24,14 @@ Template.siteHeader.rendered = function() {
   $('.ui.dropdownMenu').dropdown();
 
   if(!Router.current().params.week) {
-    var weeks = _.uniq(Games.find({},
-      { sort: { week: 1}, fields: { week: true}}).fetch().map(function(d) {
-          return d.week;
-        })
-    );
-    Router.go('/' + weeks[weeks.length -1], {week: 5}, {query: 'q=s', hash: 'hashFrag'});
+    $.getJSON( "http://www.nfl.com/liveupdate/scorestrip/ss.json", {} )
+      .done(function( json ) {
+        Router.go('/' + json.w, {week: json.w}, {query: 'q=s', hash: 'hashFrag'});
+      })
+      .fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
+        Router.go('/4', {week: 4}, {query: 'q=s', hash: 'hashFrag'});
+    });
   }
 
   Tracker.autorun(function(){
