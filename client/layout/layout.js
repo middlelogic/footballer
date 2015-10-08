@@ -37,6 +37,7 @@ Template.siteHeader.rendered = function() {
 
   Tracker.autorun(function(){
   if(Meteor.userId()){
+    console.log("new user added.");
     Router.current().render(Template.mainContent);
   }
 });

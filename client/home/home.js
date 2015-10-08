@@ -327,12 +327,13 @@ if(Meteor.isClient) {
   Template.mainContentVersus.helpers({
     'users': function() {
       var users = Meteor.users.find({}).fetch();
-      users.forEach(function(d) {
-        d.name = d.profile["first-name"];
-        d.color = d.profile["fav-color"];
-      });
-      // console.log("users:", users);
-      return users;
+      if(typeof users !== 'undefined') {
+        users.forEach(function(d) {
+          d.name = d.profile["first-name"];
+          d.color = d.profile["fav-color"];
+        });
+        return users;
+      }
     },
     'picks': function(userId) {
       var picks = [];
@@ -569,16 +570,22 @@ if(Meteor.isClient) {
       var stats = Session.get('stats'),
           percentage;
 
-        if(stats) {
+        if(typeof stats !== 'undefined') {
           stats.forEach(function(d) {
             if(d.id === userId) {
               percentage = (d.win / (d.loss + d.win)) * 100;
             }
           });
-          return Math.ceil(percentage);
+          if(isNaN(percentage)) {
+            return 'No picks :(';
+          }
+          else {
+            return '' + Math.ceil(percentage) + '%';
+          }
+
 
         } else {
-          return 0;
+          return '' + 0 + '%';
         }
 
     },
@@ -586,7 +593,7 @@ if(Meteor.isClient) {
       var stats = Session.get('stats'),
           fractions;
 
-      if(stats) {
+      if(typeof stats !== 'undefined') {
         stats.forEach(function(d) {
           if(d.id === userId) {
             var totalGames = d.loss + d.win;
