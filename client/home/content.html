@@ -5,7 +5,9 @@
       <a class="item active" data-tab="versus">VS.</a>
       {{#if currentUser}}
       <a class="item" data-tab="picks">Picks</a>
+      {{#if isAdmin currentUser}}
       <a class="item" data-tab="odds">Odds</a>
+      {{/if}}
       {{/if}}
       <a class="item refreshGameData">
         <i class="refresh icon"></i>
