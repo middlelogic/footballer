@@ -1,0 +1,45 @@
+<template name="mainContentPicks">
+  <div class="ui clearing">
+      <h3 class="ui left floated header">Picks</h3>
+      <button class="ui right floated tiny button green savePicks">
+        Save
+      </button>
+      <br />
+  </div>
+  <form name="picks" class="form form-picks">
+    <div class="ui internally celled grid">
+      <div class="row grey">
+        <div class="six wide column">
+             Visitor
+        </div>
+        <div class="six wide column">
+             Home
+        </div>
+        <div class="four wide column">
+             Spread
+        </div>
+      </div>
+      {{#each games}}
+      <div class="row">
+        <div class="six wide column">
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="pick-{{eid}}-{{away.code}}" name="{{eid}}" value="{{away.code}}" checked="{{isAwayChecked}}" tabindex="{{eid}}" class="hidden">
+              <label>{{away.name}} ({{away.code}})</label>
+            </div>
+          </div>
+        </div>
+        <div class="six wide column">
+          <div class="ui radio checkbox">
+            <input type="radio" id="pick-{{eid}}-{{home.code}}" name="{{eid}}" value="{{home.code}}" checked="" tabindex="{{eid}}" class="hidden">
+            <label>{{home.name}} ({{home.code}})</label>
+          </div>
+        </div>
+        <div class="four wide column">
+          {{getOdds(this)}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </form>
+</template>

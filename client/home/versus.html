@@ -1,0 +1,66 @@
+<template name="mainContentVersus">
+  <div class="ui clearing">
+      <h3 class="ui header">Versus</h3>
+      <br />
+      <!-- <form class="ui form">
+        <div class="fields">
+          <div class="field">
+            <label>Player 1</label>
+            <select class="ui dropdown dropdownMenu">
+              <option>Rachel</option>
+              <option>Tim</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Player 2</label>
+            <select class="ui dropdown dropdownMenu">
+              <option>Rachel</option>
+              <option>Tim</option>
+            </select>
+          </div>
+        </div>
+      </form> -->
+  </div>
+  <div class="ui two cards">
+    {{#each users}}
+    <div class="ui {{color}} card">
+      <div class="extra content">
+        <a class="header">{{name}}</a>
+      </div>
+      <div class="extra content center aligned">
+        <div class="ui statistic small">
+          <div class="value">
+            {{getWinnerPercentage(_id)}}%
+            <div class="ui bottom attached {{color}} progress" data-percent="{{getWinnerPercentage(_id)}}">
+              <div class="bar" style="transition-duration: 300ms; width: {{getWinnerPercentage(_id)}}%;"></div>
+            </div>
+          </div>
+          <div class="label">
+            {{getFractions(_id)}}
+          </div>
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="ui accordion">
+          <div class="title">
+            <i class="dropdown icon"></i>
+            Picks
+          </div>
+          <div class="content">
+            <div class="ui relaxed divided list picks">
+            {{#each picks _id}}
+            <div id="pick-{{pick.userId}}" class="item">
+              <i class="large {{getWinner(this)}} middle aligned icon {{getWinnerClass(this)}}"></i>
+              <div class="content">
+                <a class="header">{{getName(this)}}</a>
+              </div>
+            </div>
+            {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>

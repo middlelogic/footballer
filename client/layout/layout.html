@@ -1,3 +1,7 @@
 <template name="layout">
-  {{>yield}}
+  <div class="container">
+    {{> siteHeader}}
+    {{> yield}}
+    {{> siteFooter}}
+  </div>
 </template>

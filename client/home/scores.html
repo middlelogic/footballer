@@ -1,0 +1,54 @@
+<template name="mainContentScores">
+  <div class="ui internally celled grid">
+    <div class="row grey">
+      <div class="six wide column center aligned">
+           Visitor
+      </div>
+      <div class="four wide column center aligned">
+           Info
+      </div>
+      <div class="six wide column center aligned">
+           Home
+      </div>
+    </div>
+    {{#each games}}
+    <div class="row">
+      <div id="away-{{_id}}"
+           class="six wide column center aligned">
+           <div class="ui {{scoreAwayClass(this)}} statistic small">
+            <div class="value">
+              {{away.score}}
+            </div>
+            <div class="label">
+              {{away.name}} ({{away.code}})
+            </div>
+          </div>
+      </div>
+      <div id="info-{{_id}}"
+           class="four wide column center aligned">
+             {{weekDay}} - {{gameTime}}<br />
+             {{getStatus(status)}} <br />
+             {{getOdds(this)}}
+             {{#if isRedZone this}}
+             <div class="ui red statistic mini">
+               <div class="value">
+                 RED ZONE
+               </div>
+             </div>
+             {{/if}}
+      </div>
+      <div id="home-{{_id}}"
+           class="six wide column center aligned">
+           <div class="ui {{scoreHomeClass(this)}} statistic small">
+            <div class="value">
+              {{home.score}}
+            </div>
+            <div class="label">
+              {{home.name}} ({{home.code}})
+            </div>
+          </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>

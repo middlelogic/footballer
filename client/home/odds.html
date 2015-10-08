@@ -1,0 +1,56 @@
+<template name="mainContentOdds">
+  <div class="ui clearing">
+      <h3 class="ui left floated header">Picks</h3>
+      <button class="ui right floated tiny button green saveOdds">
+        Save
+      </button>
+      <br />
+  </div>
+  <form name="odds" class="ui form form-odds">
+    <div class="ui internally celled grid">
+      <div class="row grey">
+        <div class="five wide column">
+            Visitor
+        </div>
+        <div class="five wide column">
+            Home
+        </div>
+        <div class="six wide column">
+            Spread
+        </div>
+      </div>
+      {{#each games}}
+      <div class="row">
+        <div class="five wide column">
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="odd-{{eid}}-{{away.code}}" name="{{eid}}-code" value="{{away.code}}" checked="{{isAwayChecked}}" tabindex="{{eid}}" class="hidden">
+              <label>{{away.name}} ({{away.code}})</label>
+            </div>
+          </div>
+        </div>
+        <div class="five wide column">
+          <div class="ui radio checkbox">
+            <input type="radio" id="odd-{{eid}}-{{home.code}}" name="{{eid}}-code" value="{{home.code}}" checked="" tabindex="{{eid}}" class="hidden">
+            <label>{{home.name}} ({{home.code}})</label>
+          </div>
+        </div>
+        <div class="six wide column">
+          <div class="field">
+             <input type="number" id="odd-{{eid}}-spread" value="0" name="{{eid}}-spread" placeholder="" />
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </form>
+  <div class="ui padded grid">
+    <div class="row right aligned">
+      <div class="column wide">
+        <button class="ui green button saveOdds">
+           Save
+        </button>
+      </div>
+    </div>
+  </div>
+</template>

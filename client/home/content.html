@@ -1,0 +1,26 @@
+<template name="mainContent">
+  <div class="ui container">
+    <div class="ui top attached tabular menu">
+      <a class="item" data-tab="scores">Scores</a>
+      <a class="item active" data-tab="versus">VS.</a>
+      <a class="item" data-tab="picks">Picks</a>
+      <a class="item" data-tab="odds">Odds</a>
+      <a class="item refreshGameData">
+        <i class="refresh icon"></i>
+      </a>
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="scores">
+      {{> mainContentScores}}
+    </div>
+    <div class="ui bottom attached tab segment active" data-tab="versus">
+      {{> mainContentVersus}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="picks">
+      {{> mainContentPicks}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="odds">
+      {{> mainContentOdds}}
+    </div>
+  </div>
+  <br /><br />
+</template>

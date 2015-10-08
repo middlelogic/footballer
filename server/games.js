@@ -60,6 +60,7 @@ Meteor.methods({
     cb({ success: true });
   },
   getGameData: function () {
+    // console.log("Getting Game data...");
     var response, data, res;
     try {
         var data = request.sync("http://www.nfl.com/liveupdate/scorestrip/ss.json");
@@ -78,17 +79,6 @@ Meteor.methods({
     }
   },
   getCurrentWeek: function() {
-    var response, data, res;
-    try {
-        var data = request.sync("http://www.nfl.com/liveupdate/scorestrip/ss.json");
-        if (data.response.statusCode == 200) {
-            var res = JSON.parse(data.body);
-            console.log("getting current week...", res.w);
-            return res.w;
-        }
-    } catch (error) {
-        // See below for info on errors
-        console.log(error.toString());
-    }
+    return Router.current().params.week;
   }
 });

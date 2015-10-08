@@ -2,6 +2,6 @@ Router.configure({
   layoutTemplate: 'layout'
 });
 
-Router.route('/', {
+Router.route('/:week', {
   template: 'home'
 });

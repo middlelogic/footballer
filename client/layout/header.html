@@ -1,0 +1,14 @@
+<template name="siteHeader">
+  <div class="ui inverted menu">
+    {{>loginButtons}}
+    <div class="ui dropdown item dropdownMenu">
+      Weeks
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each weeks}}
+          <a id="{{this}}" href="/{{this}}" class="item selectWeek">Week {{this}}</a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>

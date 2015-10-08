@@ -1,0 +1,15 @@
+/* Games */
+db.games.find({ week: 5 }).count();
+db.games.find({ week: 5 });
+
+/* Users */
+db.users.find().count();
+db.users.find();
+
+/* Picks */
+db.picks.find().count();
+db.picks.find();
+
+/* Odds */
+db.odds.find().count();
+db.odds.find();

@@ -1,1 +1,15 @@
-/* CSS declarations go here */
+body {
+  background-color: #CCCCCC;
+}
+
+.mainHeaderTitle {
+  padding-bottom: 8px;
+  color: #808080;
+}
+
+.copyright {
+  display: inline-block;
+  padding-top: 8px;
+  font-size: 0.7em;
+  line-height: 1.3em;
+}
