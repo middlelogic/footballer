@@ -312,10 +312,12 @@
       var stats = Session.get('stats'),
           percentage;
 
+          console.log("stats:", stats);
+
         if(typeof stats !== 'undefined') {
           stats.forEach(function(d) {
             if(d.id === userId) {
-              percentage = (d.win / (d.loss + d.win)) * 100;
+              percentage = (d.win / d.games) * 100;
             }
           });
           if(isNaN(percentage)) {
@@ -347,6 +349,9 @@
       else {
         return '- / -';
       }
+    },
+    userCount: function(users) {
+      return users < 4 ? '3' : '4';
     }
   });
 
@@ -371,19 +376,26 @@
       var user = {
         id: d,
         win: 0,
-        loss: 0
+        loss: 0,
+        games: 0
       };
 
       $(".picks > .item").each(function(index, value){
         var id = this.id.split('-')[1];
+        var status = this.id.split('-')[2];
+        console.log("status:", status);
         if(id === d) {
           var icon = $(this).find("i");
           var classList = $(icon).attr('class');
           if(classList.indexOf('green') > -1) {
             user.win++;
+            user.games++;
+          } else if (classList.indexOf('red') > -1) {
+            user.loss++;
+            user.games++;
           }
           else {
-            user.loss++;
+
           }
         }
 
