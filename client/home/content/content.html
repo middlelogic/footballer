@@ -17,7 +17,7 @@
 <template name="mainContent">
   <div class="ui container">
     <div class="ui top attached tabular menu">
-      <a class="item active" data-tab="scores">Scores</a>
+      <a id="first" class="item active" data-tab="scores">Scores</a>
       <a class="item" data-tab="versus">VS.</a>
       {{#with currentUser}}
         {{> accountLinks}}
@@ -27,7 +27,7 @@
         {{getCountdown}}
       </button>
     </div>
-    <div class="ui bottom attached tab segment active" data-tab="scores">
+    <div id="first" class="ui bottom attached tab segment active" data-tab="scores">
       {{> mainContentScores}}
     </div>
     <div class="ui bottom attached tab segment" data-tab="versus">

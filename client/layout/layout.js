@@ -3,10 +3,23 @@ Tracker.autorun(function(){
     if(typeof Session.get('userId') !== 'undefined') {
       if(Session.get('userId') !== Meteor.userId()) {
         Session.set('userId', userId);
-        console.log("new user...")
+        // console.log("new user...")
         Router.current().render(Template.home, { to: 'home' });
       }
     }
+  } else {
+    // console.log("user logged out.");
+    Meteor.setTimeout(function() {
+      $('.menu > .item.active').removeClass('active');
+      $('.ui .tab').removeClass('active');
+      $('.menu > .item').each(function(index, value) {
+          if(this.id === 'first') {
+            $(this).addClass('active');
+            $('.ui.tab[id=first]').addClass('active');
+          }
+      });
+
+    }, 250);
   }
 });
 

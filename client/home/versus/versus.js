@@ -46,7 +46,7 @@
           var userIdx;
           users.forEach(function(d, i) {
             if(d._id === Meteor.userId()) {
-              console.log("user found");
+              // console.log("user found");
               userIdx = i;
             }
           });
