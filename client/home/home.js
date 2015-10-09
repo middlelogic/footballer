@@ -155,7 +155,7 @@ if(Meteor.isClient) {
       }
     },
     isRedZone: function(game) {
-      return game.redZone > -1 ? 'red' : '';
+      return game.redZone !== 0 ? false : true;
     }
   });
 
