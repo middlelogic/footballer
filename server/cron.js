@@ -26,9 +26,9 @@ SyncedCron.config({
   });
 
 SyncedCron.add({
-	name: 'Get Game Data on Game Days',
+	name: 'Get Game Data on Game Days (every 2 minutes)',
 	schedule: function(parser) {
-		return parser.text('every 15 minutes every Thu,Sun and Mon');
+		return parser.text('every 2 minutes every Thu,Sun and Mon');
 	},
 	job: function() {
 		var getData = function() {
@@ -40,4 +40,4 @@ SyncedCron.add({
 	}
 });
 
-SyncedCron.start();
+// SyncedCron.start();

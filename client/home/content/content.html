@@ -1,8 +1,8 @@
 <template name="mainContent">
   <div class="ui container">
     <div class="ui top attached tabular menu">
-      <a class="item" data-tab="scores">Scores</a>
-      <a class="item active" data-tab="versus">VS.</a>
+      <a class="item active" data-tab="scores">Scores</a>
+      <a class="item" data-tab="versus">VS.</a>
       {{#if currentUser}}
       <a class="item" data-tab="picks">Picks</a>
       {{#if isAdmin currentUser}}
@@ -11,12 +11,13 @@
       {{/if}}
       <a class="item refreshGameData">
         <i class="refresh icon"></i>
+        Refresh
       </a>
     </div>
-    <div class="ui bottom attached tab segment" data-tab="scores">
+    <div class="ui bottom attached tab segment active" data-tab="scores">
       {{> mainContentScores}}
     </div>
-    <div class="ui bottom attached tab segment active" data-tab="versus">
+    <div class="ui bottom attached tab segment" data-tab="versus">
       {{> mainContentVersus}}
     </div>
     <div class="ui bottom attached tab segment" data-tab="picks">
