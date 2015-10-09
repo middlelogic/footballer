@@ -40,40 +40,61 @@
           d.color = d.profile["fav-color"];
         });
 
-        // Move current user to top of array
-        var userIdx;
-        users.forEach(function(d, i) {
-          if(d._id === Meteor.userId()) {
-            console.log("user found");
-            userIdx = i;
-          }
-        });
+        // If logged in, move current user to top of array
+        if(Meteor.userId()) {
 
-        var user = users[userIdx];
-        users.splice(userIdx, 1);
-        users.splice(0, 0, user);
+          var userIdx;
+          users.forEach(function(d, i) {
+            if(d._id === Meteor.userId()) {
+              console.log("user found");
+              userIdx = i;
+            }
+          });
+
+          var user = users[userIdx];
+          users.splice(userIdx, 1);
+          users.splice(0, 0, user);
+
+        }
 
         return users;
       }
     },
     'picks': function(userId) {
-      var picks = [];
-      var week = parseInt(Router.current().params.week);
-      var games = Games.find({ week: week }, { sort: { eid: 1 }});
-      if(typeof games !== 'undefined') {
-        games.forEach(function(d, i) {
-          var pick = Picks.findOne({
-            gameId: d.eid.toString(), userId: userId
+
+      var picks = [],
+          week = parseInt(Router.current().params.week);
+
+      if(!Router.current().params.week) {
+        $.getJSON( "http://www.nfl.com/liveupdate/scorestrip/ss.json", {} )
+          .done(function( json ) {
+            week = json.w;
+          })
+          .fail(function( jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            Router.go('/4', {week: 4}, {query: 'q=s', hash: 'hashFrag'});
           });
-          var odd = Odds.findOne({
-            gameId: d.eid.toString(), week: week
-          });
-          if(typeof pick !== 'undefined') {
-            picks.push({ pick: pick, game: d, odd: odd});
-          }
-        });
-        return picks;
       }
+
+      if(week !== null) {
+        var games = Games.find({ week: week }, { sort: { eid: 1 }});
+        if(typeof games !== 'undefined') {
+          games.forEach(function(d, i) {
+            var pick = Picks.findOne({
+              gameId: d.eid.toString(), userId: userId
+            });
+            var odd = Odds.findOne({
+              gameId: d.eid.toString(), week: week
+            });
+            if(typeof pick !== 'undefined') {
+              picks.push({ pick: pick, game: d, odd: odd});
+            }
+          });
+        }
+      }
+
+      return picks;
+
     },
     getName: function(item) {
       var pick = item.pick.pick,
