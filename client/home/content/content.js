@@ -1,3 +1,20 @@
+var countdown = new ReactiveCountdown(30);
+
+countdown.start(function() {
+
+    // do something when this is completed
+    countdown.start();
+
+    Meteor.call('getGameData',function(response) {
+      Router.current().render(Template.mainContentScores, { to: 'mainContentScores' });
+      Router.current().render(Template.mainContentVersus, { to: 'mainContentVersus' });
+      Router.current().render(Template.mainContentPicks, { to: 'mainContentPicks' });
+      Router.current().render(Template.mainContentOdds, { to: 'mainContentOdds' });
+    });
+
+
+});
+
 Template.mainContent.helpers({
   isAdmin: function(user) {
     var u = Meteor.users.findOne({ _id: user._id });
@@ -10,6 +27,10 @@ Template.mainContent.helpers({
     } else {
         return false;
     }
+  },
+  getCountdown: function() {
+        var number = countdown.get();
+        return number >= 10 ? '0:' + countdown.get() : '0:0' + countdown.get();
   }
 });
 

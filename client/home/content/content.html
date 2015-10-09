@@ -9,10 +9,10 @@
       <a class="item" data-tab="odds">Odds</a>
       {{/if}}
       {{/if}}
-      <a class="item refreshGameData">
+      <button class="ui button disabled refreshGameData">
         <i class="refresh icon"></i>
-        Refresh
-      </a>
+        {{getCountdown}}
+      </button>
     </div>
     <div class="ui bottom attached tab segment active" data-tab="scores">
       {{> mainContentScores}}

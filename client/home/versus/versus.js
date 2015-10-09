@@ -31,12 +31,28 @@
 
   Template.mainContentVersus.helpers({
     'users': function() {
+
+      // Find users
       var users = Meteor.users.find({}).fetch();
       if(typeof users !== 'undefined') {
         users.forEach(function(d) {
           d.name = d.profile["first-name"];
           d.color = d.profile["fav-color"];
         });
+
+        // Move current user to top of array
+        var userIdx;
+        users.forEach(function(d, i) {
+          if(d._id === Meteor.userId()) {
+            console.log("user found");
+            userIdx = i;
+          }
+        });
+
+        var user = users[userIdx];
+        users.splice(userIdx, 1);
+        users.splice(0, 0, user);
+
         return users;
       }
     },
@@ -359,7 +375,5 @@
        Session.set('stats', stats);
      }
     });
-
-
 
   };

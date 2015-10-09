@@ -32,6 +32,7 @@ fastclick@1.0.7
 flemay:less-autoprefixer@1.1.0
 flemay:semantic-ui@1.0.1
 flemay:semantic-ui-data@1.0.0
+flyandi:reactive-countdown@0.0.3
 froatsnook:request@2.64.0
 geojson-utils@1.0.4
 hot-code-push@1.0.0
