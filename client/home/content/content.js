@@ -23,10 +23,16 @@ Template.mainContent.helpers({
 
 Template.mainContent.rendered = function() {
 
-  $('.menu .item').tab({
-    alwaysRefresh: true,
-    onVisible: function(){
-      Router.current().render(Template.home, { to: 'home' });
-    }
-  });
+  $('.menu .item').tab();
+
+  if(!Router.current().params.week) {
+    $.getJSON( "http://www.nfl.com/liveupdate/scorestrip/ss.json", {} )
+      .done(function( json ) {
+        Session.set('week', json.w);
+      })
+      .fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
+        Router.go('/4', {week: 4}, {query: 'q=s', hash: 'hashFrag'});
+      });
+  }
 };

@@ -66,14 +66,7 @@
           week = parseInt(Router.current().params.week);
 
       if(!Router.current().params.week) {
-        $.getJSON( "http://www.nfl.com/liveupdate/scorestrip/ss.json", {} )
-          .done(function( json ) {
-            week = json.w;
-          })
-          .fail(function( jqxhr, textStatus, error ) {
-            var err = textStatus + ", " + error;
-            Router.go('/4', {week: 4}, {query: 'q=s', hash: 'hashFrag'});
-          });
+        week = Session.get('week');
       }
 
       if(week !== null) {
@@ -356,6 +349,11 @@
   });
 
   Template.mainContentVersus.rendered = function() {
+
+    // defaults
+    if(typeof Session.get('showPicks') === 'undefined') {
+      Session.set('showPicks', false);
+    }
 
     if(typeof Session.get('showPicks') !== 'undefined') {
       showPicks = Session.get('showPicks');
