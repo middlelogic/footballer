@@ -4,7 +4,6 @@
       var showPicks;
       if(typeof Session.get('showPicks') !== 'undefined') {
         showPicks = Session.get('showPicks');
-        console.log("showPicks found...", Session.get('showPicks'));
         if(showPicks !== 'undefined') {
           if(showPicks === false) {
             Session.set('showPicks', true);
@@ -16,13 +15,11 @@
           }
         }
         else {
-          console.log("showPicks not found...");
           Session.set('showPicks', true);
           $('.ui.accordion').accordion('open', 0);
         }
       }
       else {
-        console.log("showPicks not found...");
         Session.set('showPicks', true);
         $('.ui.accordion').accordion('open', 0);
       }
@@ -40,22 +37,22 @@
           d.color = d.profile["fav-color"];
         });
 
-        // If logged in, move current user to top of array
-        if(Meteor.userId()) {
-
-          var userIdx;
-          users.forEach(function(d, i) {
-            if(d._id === Meteor.userId()) {
-              // console.log("user found");
-              userIdx = i;
-            }
-          });
-
-          var user = users[userIdx];
-          users.splice(userIdx, 1);
-          users.splice(0, 0, user);
-
-        }
+        // // If logged in, move current user to top of array
+        // if(Meteor.userId()) {
+        //
+        //   var userIdx;
+        //   users.forEach(function(d, i) {
+        //     if(d._id === Meteor.userId()) {
+        //       // console.log("user found");
+        //       userIdx = i;
+        //     }
+        //   });
+        //
+        //   var user = users[userIdx];
+        //   users.splice(userIdx, 1);
+        //   users.splice(0, 0, user);
+        //
+        // }
 
         return users;
       }
@@ -305,7 +302,51 @@
       var stats = Session.get('stats'),
           percentage;
 
-          console.log("stats:", stats);
+          var pickIds = $.map($(".picks > .item"), function(n, i){
+            return n.id.split('-')[1];
+          });
+          var users = _.uniq(pickIds, function(d) {
+              return d;
+            });
+
+          var stats = [];
+
+          users.forEach(function(d, i) {
+            var user = {
+              id: d,
+              win: 0,
+              loss: 0,
+              games: 0
+            };
+
+            $(".picks > .item").each(function(index, value){
+              var id = this.id.split('-')[1];
+              var status = this.id.split('-')[2];
+              // console.log("status:", status);
+              if(id === d) {
+                var icon = $(this).find("i");
+                var classList = $(icon).attr('class');
+                if(classList.indexOf('green') > -1) {
+                  user.win++;
+                  user.games++;
+                } else if (classList.indexOf('red') > -1) {
+                  user.loss++;
+                  user.games++;
+                }
+                else {
+
+                }
+              }
+
+              if(index === pickIds.length - 1) {
+                stats.push(user);
+              }
+           });
+
+           if(i === users.length -1) {
+             Session.set('stats', stats);
+           }
+          });
 
         if(typeof stats !== 'undefined') {
           stats.forEach(function(d) {
@@ -330,6 +371,52 @@
       var stats = Session.get('stats'),
           fractions;
 
+          var pickIds = $.map($(".picks > .item"), function(n, i){
+            return n.id.split('-')[1];
+          });
+          var users = _.uniq(pickIds, function(d) {
+              return d;
+            });
+
+          var stats = [];
+
+          users.forEach(function(d, i) {
+            var user = {
+              id: d,
+              win: 0,
+              loss: 0,
+              games: 0
+            };
+
+            $(".picks > .item").each(function(index, value){
+              var id = this.id.split('-')[1];
+              var status = this.id.split('-')[2];
+              console.log("status:", status);
+              if(id === d) {
+                var icon = $(this).find("i");
+                var classList = $(icon).attr('class');
+                if(classList.indexOf('green') > -1) {
+                  user.win++;
+                  user.games++;
+                } else if (classList.indexOf('red') > -1) {
+                  user.loss++;
+                  user.games++;
+                }
+                else {
+
+                }
+              }
+
+              if(index === pickIds.length - 1) {
+                stats.push(user);
+              }
+           });
+
+           if(i === users.length -1) {
+             Session.set('stats', stats);
+           }
+          });
+
       if(typeof stats !== 'undefined') {
         stats.forEach(function(d) {
           if(d.id === userId) {
@@ -351,20 +438,19 @@
   Template.mainContentVersus.rendered = function() {
 
     Meteor.setTimeout(function() {
-    // defaults
-    if(typeof Session.get('showPicks') === 'undefined') {
-      console.log("setting showPicks to false");
-      Session.set('showPicks', false);
-      $('.ui.accordion').accordion();
-    }
-
-    if(typeof Session.get('showPicks') !== 'undefined') {
-      showPicks = Session.get('showPicks');
-      if(showPicks === true) {
-          $('.ui.accordion').accordion('open', 0);
+      // defaults
+      if(typeof Session.get('showPicks') === 'undefined') {
+        console.log("setting showPicks to false");
+        Session.set('showPicks', false);
+        $('.ui.accordion').accordion();
       }
-    }
 
+      if(typeof Session.get('showPicks') !== 'undefined') {
+        showPicks = Session.get('showPicks');
+        if(showPicks === true) {
+            $('.ui.accordion').accordion('open', 0);
+        }
+      }
 
       var pickIds = $.map($(".picks > .item"), function(n, i){
         return n.id.split('-')[1];
@@ -384,8 +470,6 @@
 
         $(".picks > .item").each(function(index, value){
           var id = this.id.split('-')[1];
-          var status = this.id.split('-')[2];
-          console.log("status:", status);
           if(id === d) {
             var icon = $(this).find("i");
             var classList = $(icon).attr('class');

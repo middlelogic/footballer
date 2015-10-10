@@ -7,7 +7,8 @@ countdown.start(function() {
 
     $('.menu .item').tab();
     Meteor.call('getGameData',function(response) {
-      Router.current().render(Template.home, { to: 'home' });
+      Router.current().render(Template.mainContentScores, { to: 'mainContentScores' });
+      Router.current().render(Template.mainContentVersus, { to: 'mainContentVersus' });
     });
 });
 
