@@ -350,9 +350,12 @@
 
   Template.mainContentVersus.rendered = function() {
 
+    Meteor.setTimeout(function() {
     // defaults
     if(typeof Session.get('showPicks') === 'undefined') {
+      console.log("setting showPicks to false");
       Session.set('showPicks', false);
+      $('.ui.accordion').accordion();
     }
 
     if(typeof Session.get('showPicks') !== 'undefined') {
@@ -362,49 +365,52 @@
       }
     }
 
-    var pickIds = $.map($(".picks > .item"), function(n, i){
-      return n.id.split('-')[1];
-    });
-    var users = _.uniq(pickIds, function(d) {
-        return d;
+
+      var pickIds = $.map($(".picks > .item"), function(n, i){
+        return n.id.split('-')[1];
       });
+      var users = _.uniq(pickIds, function(d) {
+          return d;
+        });
 
-    var stats = [];
-    users.forEach(function(d, i) {
-      var user = {
-        id: d,
-        win: 0,
-        loss: 0,
-        games: 0
-      };
+      var stats = [];
+      users.forEach(function(d, i) {
+        var user = {
+          id: d,
+          win: 0,
+          loss: 0,
+          games: 0
+        };
 
-      $(".picks > .item").each(function(index, value){
-        var id = this.id.split('-')[1];
-        var status = this.id.split('-')[2];
-        console.log("status:", status);
-        if(id === d) {
-          var icon = $(this).find("i");
-          var classList = $(icon).attr('class');
-          if(classList.indexOf('green') > -1) {
-            user.win++;
-            user.games++;
-          } else if (classList.indexOf('red') > -1) {
-            user.loss++;
-            user.games++;
+        $(".picks > .item").each(function(index, value){
+          var id = this.id.split('-')[1];
+          var status = this.id.split('-')[2];
+          console.log("status:", status);
+          if(id === d) {
+            var icon = $(this).find("i");
+            var classList = $(icon).attr('class');
+            if(classList.indexOf('green') > -1) {
+              user.win++;
+              user.games++;
+            } else if (classList.indexOf('red') > -1) {
+              user.loss++;
+              user.games++;
+            }
+            else {
+
+            }
           }
-          else {
 
+          if(index === pickIds.length - 1) {
+            stats.push(user);
           }
-        }
+       });
 
-        if(index === pickIds.length - 1) {
-          stats.push(user);
-        }
-     });
+       if(i === users.length -1) {
+         Session.set('stats', stats);
+       }
+      });
+    }, 3000)
 
-     if(i === users.length -1) {
-       Session.set('stats', stats);
-     }
-    });
 
   };
