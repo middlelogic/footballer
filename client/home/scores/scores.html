@@ -1,5 +1,6 @@
 <template name="mainContentScores">
   <div class="ui internally celled grid">
+    {{#if currentUser}}
     <div class="row grey">
       <div class="six wide column center aligned">
            Visitor
@@ -15,19 +16,17 @@
     <div class="row">
       <div id="away-{{_id}}"
            class="six wide column center aligned">
-           <div class="ui {{isWinning this 'away' getResult}} statistic small">
+           <div class="ui {{isWinning this 'away' getResult}} statistic tiny">
             <div class="value">
+              {{#if isPick getResult this 'away'}}
+              <i class="icon star small {{isPickCorrect getResult}}"></i>
+              {{/if}}
               {{away.score}}
             </div>
             <div class="label">
               {{away.name}} ({{away.code}})
             </div>
           </div>
-          {{#if isPick getResult this 'away'}}
-          <div style="float: left;">
-            <i class="icon star large {{isPickCorrect getResult}}"></i>
-          </div>
-          {{/if}}
       </div>
       <div id="info-{{_id}}"
            class="four wide column center aligned">
@@ -50,21 +49,32 @@
       </div>
       <div id="home-{{_id}}"
            class="six wide column center aligned">
-           <div class="ui {{isWinning this 'home' getResult}} statistic small">
+           <div class="ui {{isWinning this 'home' getResult}} statistic tiny">
             <div class="value">
               {{home.score}}
+              {{#if isPick getResult this 'home'}}
+              <i class="icon star small {{isPickCorrect getResult}}"></i>
+              {{/if}}
             </div>
             <div class="label">
               {{home.name}} ({{home.code}})
             </div>
           </div>
-          {{#if isPick getResult this 'home'}}
-          <div style="float: right;">
-            <i class="icon star large {{isPickCorrect getResult}}"></i>
-          </div>
-          {{/if}}
       </div>
     </div>
     {{/each}}
+    {{else}}
+    <div class="row">
+      <div class="ui header">
+        <div class="content" style="padding: 16px;">
+          <div class="subheader">
+            <i class="icon sign in"></i>
+            <span style="color: #999999;">Please sign in to view scores.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {{/if}}
   </div>
 </template>
