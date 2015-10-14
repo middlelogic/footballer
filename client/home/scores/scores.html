@@ -15,7 +15,7 @@
     <div class="row">
       <div id="away-{{_id}}"
            class="six wide column center aligned">
-           <div class="ui {{scoreAwayClass(this)}} statistic small">
+           <div class="ui {{isWinning this 'away' getResult}} statistic small">
             <div class="value">
               {{away.score}}
             </div>
@@ -23,6 +23,11 @@
               {{away.name}} ({{away.code}})
             </div>
           </div>
+          {{#if isPick getResult this 'away'}}
+          <div style="float: left;">
+            <i class="icon star large {{isPickCorrect getResult}}"></i>
+          </div>
+          {{/if}}
       </div>
       <div id="info-{{_id}}"
            class="four wide column center aligned">
@@ -30,9 +35,9 @@
                {{weekDay}} - {{gameTime}}
              </span>
              <br />
-             {{getStatus(status)}} <br />
+             {{getStatus(getResult)}} <br />
              <span class="smaller-grey">
-               {{getOdds(this)}}
+               {{getOdds(getResult)}}
              </span>
              <br />
              {{#if isRedZone this}}
@@ -45,7 +50,7 @@
       </div>
       <div id="home-{{_id}}"
            class="six wide column center aligned">
-           <div class="ui {{scoreHomeClass(this)}} statistic small">
+           <div class="ui {{isWinning this 'home' getResult}} statistic small">
             <div class="value">
               {{home.score}}
             </div>
@@ -53,6 +58,11 @@
               {{home.name}} ({{home.code}})
             </div>
           </div>
+          {{#if isPick getResult this 'home'}}
+          <div style="float: right;">
+            <i class="icon star large {{isPickCorrect getResult}}"></i>
+          </div>
+          {{/if}}
       </div>
     </div>
     {{/each}}

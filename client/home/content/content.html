@@ -1,5 +1,8 @@
 <template name="accountLinks">
-  <a class="item" data-tab="picks">Picks</a>
+  <a class="item" data-tab="picks">
+    <i class="icon star"></i>
+    Picks
+  </a>
   {{#if isAdmin currentUser}}
     <a class="item" data-tab="odds">Odds</a>
   {{/if}}

@@ -391,7 +391,7 @@
             $(".picks > .item").each(function(index, value){
               var id = this.id.split('-')[1];
               var status = this.id.split('-')[2];
-              console.log("status:", status);
+              // console.log("status:", status);
               if(id === d) {
                 var icon = $(this).find("i");
                 var classList = $(icon).attr('class');
