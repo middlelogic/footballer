@@ -2,6 +2,11 @@
   Template.mainContentPicks.helpers({
     games: function() {
       var week = parseInt(Router.current().params.week);
+
+      if(!Router.current().params.week) {
+        week = Session.get('week');
+      }
+
       return Games.find({ week: week }, { sort: { gameId: 1 }});
     },
     getOdds: function(game) {
@@ -14,12 +19,17 @@
 
   Template.mainContentPicks.events({
     'click .savePicks': function() {
+        var week = parseInt(Router.current().params.week);
+
+        if(!Router.current().params.week) {
+          week = Session.get('week');
+        }
         // console.log($('.form-picks').serialize());
         var form = $('.form-picks').serialize().split('&');
         var picks = [];
         form.forEach(function(d) {
           var pick = d.split('=');
-          picks.push({ key: pick[0], val: pick[1] });
+          picks.push({ key: pick[0], val: pick[1], week: week });
         });
         Meteor.call('savePicks', picks, function(err, response) {
           $.semanticUiGrowl('Picks were saved :)');

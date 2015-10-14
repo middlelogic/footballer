@@ -31,17 +31,42 @@ Template.loginButtons.rendered = function()
 Template.siteHeader.helpers({
   weeks: function() {
     return _.uniq(Games.find({}, {
-        sort: { week: 1}, fields: { week: true}
+        sort: { week: -1}, fields: { week: true}
       }).fetch().map(function(d) {
         return d.week;
       }), true
     );
+  },
+  currentUser: function(){
+    return Meteor.user();
+  },
+  isAdmin: function(user) {
+    if(typeof Meteor.user() !== 'undefined') {
+      var u = Meteor.users.findOne({ _id: Meteor.userId() });
+      if(typeof u !== 'undefined') {
+        if(typeof u.profile.role !== 'undefined') {
+          return u.profile.role === 'admin' ? true : false;
+        } else {
+          return false;
+        }
+      } else {
+          return false;
+      }
+    } else {
+      return false;
+    }
+
   }
 });
 
 Template.siteHeader.events({
   'click .selectWeek': function(event) {
       Router.current().render(Template.mainContent);
+  },
+  'click .addWeekToLegacyPicks': function() {
+    Meteor.call('addWeekToLegacyPicks', function(response) {
+      console.log("response:", response);
+    });
   }
 });
 

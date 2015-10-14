@@ -17,7 +17,11 @@
       return result.status;
     },
     getOdds: function(result) {
-      return result.odds.pick + ' by ' + Math.abs(result.odds.spread);
+      if(typeof result.odds !== 'undefined') {
+          return result.odds.pick + ' by ' + Math.abs(result.odds.spread);
+      } else {
+        return null;
+      }
     },
     isRedZone: function(game) {
       return game.redZone === 1 ? true : false;

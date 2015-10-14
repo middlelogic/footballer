@@ -1,41 +1,83 @@
 <template name="mainContentVersus">
   <div class="ui">
-    <button class="ui right floated tiny button primary showPicks">
-      Show Picks
-    </button>
-    <h3 class="ui header" style="margin-top: 0px;">
-      <div class="content">
-          Versus
-          <div class="sub header">
-            The percentage is calculated by completed games and current games in progress.<br />
-            <span style="float: left; font-size: 0.95em; font-style: italic; margin-top: 8px;">
-              <strong>*</strong> If you don't see a value, re-select the current week!
-            </span>
-          </div>
-      </div>
+    <h3 class="ui header" style="margin-bottom: 16px;">
+      Versus
     </h3>
   </div>
-  <div class="ui divider"></div>
-  <div class="ui container center aligned">
-    <div class="ui {{userCount}} cards">
-      {{#each users}}
-      <div class="ui {{color}} card">
-        <div class="extra content">
-          <a class="header">{{name}}</a>
-        </div>
-        <div class="extra content center aligned">
-          <div class="ui statistic small">
+  <div class="ui cards">
+    {{#each users}}
+    <div class="ui two card" style="margin: 6px;">
+      <div class="content">
+        {{#with picks _id}}
+        <div class="right floated meta">
+          <div class="ui statistic tiny">
             <div class="value">
-              {{getWinnerPercentage(_id)}}
-              <div class="ui bottom attached {{color}} progress" data-percent="{{getWinnerPercentage(_id)}}">
-                <div class="bar" style="transition-duration: 300ms; width: {{getWinnerPercentage(_id)}}%;"></div>
+              {{getWinnerPercentage this}}%
+              <div class="ui bottom attached {{color}} progress" data-percent="{{getWinnerPercentage this}}">
+                <div class="bar" style="transition-duration: 300ms; width: {{getWinnerPercentage this}}%;"></div>
               </div>
             </div>
             <div class="label">
-              {{getFractions(_id)}}
+              {{getFractions this}}
             </div>
           </div>
         </div>
+        {{/with}}
+        <div class="header">
+          {{name}}
+        </div>
+        <button id="{{_id}}" class="ui button basic tiny compact showPicks" style="margin-top: 8px;">
+          <i class="icon star"></i>
+          Picks
+        </button>
+        <div class="ui modal modal-{{_id}}">
+          <i class="close icon"></i>
+          <div class="header">
+            <i class="icon star empty"></i>
+            {{properName name}} Picks
+          </div>
+          <div class="content">
+            <div class="ui relaxed divided list picks">
+            {{#each picks _id}}
+            <div id="pick-{{pick.userId}}" class="item">
+              <i class="large {{getWinner getResult}} middle aligned icon {{getWinnerClass getResult}}"></i>
+              <div class="content">
+                <a class="header">{{getName this getResult}}</a>
+              </div>
+            </div>
+            {{/each}}
+            </div>
+          </div>
+          <div class="actions">
+            <div class="ui deny right button">
+              Close
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+      <!-- <div class="ui {{color}} card">
+        <div class="extra content">
+          <a class="header">{{name}}</a>
+        </div>
+        {{#with picks _id}}
+        <div class="extra content center aligned">
+          <div class="ui statistic small">
+            <div class="value">
+              {{getWinnerPercentage this}}
+              <div class="ui bottom attached {{color}} progress" data-percent="{{getWinnerPercentage this}}">
+                <div class="bar" style="transition-duration: 300ms; width: {{getWinnerPercentage this}}%;"></div>
+              </div>
+            </div>
+            <div class="label">
+              {{getFractions this}}
+            </div>
+          </div>
+        </div>
+        {{/with}}
         <div class="extra content">
           <div class="ui accordion">
             <div class="title">
@@ -46,9 +88,9 @@
               <div class="ui relaxed divided list picks">
               {{#each picks _id}}
               <div id="pick-{{pick.userId}}" class="item">
-                <i class="large {{getWinner(this)}} middle aligned icon {{getWinnerClass(this)}}"></i>
+                <i class="large {{getWinner getResult}} middle aligned icon {{getWinnerClass getResult}}"></i>
                 <div class="content">
-                  <a class="header">{{getName(this)}}</a>
+                  <a class="header">{{getName this getResult}}</a>
                 </div>
               </div>
               {{/each}}
@@ -56,8 +98,6 @@
             </div>
           </div>
         </div>
-      </div>
-      {{/each}}
-    </div>
-  </div>
+      </div> -->
+
 </template>

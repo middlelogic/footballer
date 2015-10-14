@@ -1,6 +1,5 @@
 <template name="mainContentScores">
   <div class="ui internally celled grid">
-    {{#if currentUser}}
     <div class="row grey">
       <div class="six wide column center aligned">
            Visitor
@@ -24,7 +23,7 @@
               {{away.score}}
             </div>
             <div class="label">
-              {{away.name}} ({{away.code}})
+              {{away.name}}<br />({{away.code}})
             </div>
           </div>
       </div>
@@ -57,24 +56,11 @@
               {{/if}}
             </div>
             <div class="label">
-              {{home.name}} ({{home.code}})
+              {{home.name}}<br />({{home.code}})
             </div>
           </div>
       </div>
     </div>
     {{/each}}
-    {{else}}
-    <div class="row">
-      <div class="ui header">
-        <div class="content" style="padding: 16px;">
-          <div class="subheader">
-            <i class="icon sign in"></i>
-            <span style="color: #999999;">Please sign in to view scores.</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    {{/if}}
   </div>
 </template>
