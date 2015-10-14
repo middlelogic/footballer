@@ -30,7 +30,23 @@
       {{> mainContentScores}}
     </div>
     <div class="ui bottom attached tab segment" data-tab="versus">
-      {{> mainContentVersus}}
+      {{#unless noRender}}
+        {{> mainContentVersus}}
+      {{else}}
+      <div class="ui segment">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="ui active inverted dimmer">
+          <div class="ui small text loader">Refreshing Leaderboard</div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+      {{/unless}}
     </div>
     {{#with currentUser}}
       {{> accountTabs}}

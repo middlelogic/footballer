@@ -6,9 +6,9 @@ countdown.start(function() {
     countdown.start();
 
     $('.menu .item').tab();
+    Session.set('noRender', true);
     Meteor.call('getGameData',function(response) {
-      Router.current().render(Template.mainContentScores, { to: 'mainContentScores' });
-      Router.current().render(Template.mainContentVersus, { to: 'mainContentVersus' });
+      Session.set('noRender', false);
     });
 });
 
@@ -21,6 +21,10 @@ Template.mainContent.helpers({
     return Meteor.user();
   }
 });
+
+Template.mainContent.noRender = function() {
+  return Session.get('noRender');
+};
 
 Template.mainContent.rendered = function() {
 

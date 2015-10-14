@@ -63,7 +63,7 @@ Meteor.methods({
     console.log("Getting Game data...");
     var response, data, res;
     try {
-        // var url = "http://www.mocky.io/v2/56190a73100000d41e07771c";
+        //var url = "http://www.mocky.io/v2/561eab57100000b52ff143c2";
         var url = "http://www.nfl.com/liveupdate/scorestrip/ss.json";
         var data = request.sync(url);
         // console.log("data:", data);
