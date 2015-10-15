@@ -41,10 +41,18 @@
       });
     },
     getWinner: function(result) {
-      return result.isPickCorrect ? 'checkmark' : 'remove';
+      if (result.isPickCorrect && result.status !== 'P') {
+        return result.isPickCorrect ? 'checkmark' : 'remove';
+      } else {
+        return 'minus';
+      }
     },
     getWinnerClass: function(result) {
-      return result.isPickCorrect ? 'green' : 'red';
+      if (result.isPickCorrect && result.status !== 'P') {
+        return result.isPickCorrect ? 'green' : 'red';
+      } else {
+        return 'yellow';
+      }
     },
     getWinnerPercentage: function(picks) {
 
@@ -52,10 +60,11 @@
         var total = 0,
             correct = 0;
         picks.forEach(function(d, i) {
-          total++;
           var result = d.getResult();
-          if(result.isPickCorrect)
+          if(result.isPickCorrect && result.status !== 'P') {
+            total++;
             correct++;
+          }
         });
         var percentage = correct / total;
         return isNaN(percentage) ? 0 : Math.ceil(percentage * 100);
@@ -69,10 +78,11 @@
         var total = 0,
             correct = 0;
         picks.forEach(function(d, i) {
-          total++;
           var result = d.getResult();
-          if(result.isPickCorrect)
+          if(result.isPickCorrect && result.status !== 'P') {
+            total++;
             correct++;
+          }
         });
         return correct + ' / ' + total;
       }
@@ -108,7 +118,7 @@
         return parseInt(b.percentage) - parseInt(a.percentage);
       });
 
-      console.log("leaderboard:", leaderboard);
+      // console.log("leaderboard:", leaderboard);
 
       var cont = $('#cards');
       $.each(leaderboard, function(i, v) {

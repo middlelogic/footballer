@@ -11,7 +11,13 @@
       return result.isPickCorrect ? 'yellow' : 'empty yellow';
     },
     isWinning: function(game, side, result) {
-      return game[side].code === result.winning ? 'green' : 'red';
+      if(game[side].code === result.winning && game.status !== 'P') {
+          return game[side].code === result.winning ? 'green' : 'red';
+      } else if(game[side].code !== result.winning && game.status !== 'P') {
+          return game[side].code === result.winning ? 'green' : 'red';
+      } else {
+          return 'black'
+      }
     },
     getStatus: function(result) {
       return result.status;
