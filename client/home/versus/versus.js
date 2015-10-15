@@ -41,14 +41,18 @@
       });
     },
     getWinner: function(result) {
-      if (result.isPickCorrect && result.status !== 'P') {
+      if (result.isPickCorrect && result.game.status !== 'P') {
+        return result.isPickCorrect ? 'checkmark' : 'remove';
+      } else if (!result.isPickCorrect && result.game.status !== 'P') {
         return result.isPickCorrect ? 'checkmark' : 'remove';
       } else {
         return 'minus';
       }
     },
     getWinnerClass: function(result) {
-      if (result.isPickCorrect && result.status !== 'P') {
+      if (result.isPickCorrect && result.game.status !== 'P') {
+        return result.isPickCorrect ? 'green' : 'red';
+      } else if (!result.isPickCorrect && result.game.status !== 'P') {
         return result.isPickCorrect ? 'green' : 'red';
       } else {
         return 'yellow';
@@ -61,9 +65,11 @@
             correct = 0;
         picks.forEach(function(d, i) {
           var result = d.getResult();
-          if(result.isPickCorrect && result.status !== 'P') {
+          if(result.isPickCorrect && result.game.status !== 'P') {
             total++;
             correct++;
+          } else if (!result.isPickCorrect && result.game.status !== 'P') {
+            total++;
           }
         });
         var percentage = correct / total;
@@ -79,9 +85,11 @@
             correct = 0;
         picks.forEach(function(d, i) {
           var result = d.getResult();
-          if(result.isPickCorrect && result.status !== 'P') {
+          if(result.isPickCorrect && result.game.status !== 'P') {
             total++;
             correct++;
+          } else if (!result.isPickCorrect && result.game.status !== 'P') {
+            total++;
           }
         });
         return correct + ' / ' + total;
