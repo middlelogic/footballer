@@ -6,9 +6,12 @@ countdown.start(function() {
     countdown.start();
 
     $('.menu .item').tab();
-    Session.set('noRender', true);
+
     Meteor.call('getGameData',function(response) {
-      Session.set('noRender', false);
+      Session.set('noRender', true);
+      Meteor.setTimeout(function() {
+        Session.set('noRender', false);
+      }, 1);
     });
 });
 
@@ -19,12 +22,12 @@ Template.mainContent.helpers({
   },
   currentUser: function(){
     return Meteor.user();
+  },
+  'noRender': function() {
+      return Session.get('noRender');
   }
 });
 
-Template.mainContent.noRender = function() {
-  return Session.get('noRender');
-};
 
 Template.mainContent.rendered = function() {
 

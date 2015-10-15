@@ -31,3 +31,4 @@ meteorhacks:kadira
 percolate:synced-cron
 mirrorcell:smart-reload
 flyandi:reactive-countdown
+momentjs:moment

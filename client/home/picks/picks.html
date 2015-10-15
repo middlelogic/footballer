@@ -1,6 +1,13 @@
 <template name="mainContentPicks">
   <div class="ui clearing">
-      <h3 class="ui left floated header">Picks</h3>
+      <h3 class="ui left floated header">
+        <div class="content">
+          Picks
+          <div class="sub header">
+            Active until 1 hour before each game.
+          </div>
+        </div>
+      </h3>
       <button class="ui right floated tiny button green savePicks">
         Save
       </button>
@@ -24,19 +31,33 @@
         <div class="six wide column">
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="pick-{{eid}}-{{away.code}}" name="{{eid}}" value="{{away.code}}" checked="{{isAwayChecked}}" tabindex="{{eid}}" class="hidden">
-              <label>{{away.name}} ({{away.code}})</label>
+              <input type="radio"
+                id="pick-{{eid}}-{{away.code}}"
+                name="{{eid}}"
+                value="{{away.code}}"
+                checked=""
+                tabindex="{{eid}}"
+                class="hidden">
+              <label>{{away.name}} ({{away.code}}) {{isActive this}}</label>
             </div>
           </div>
         </div>
         <div class="six wide column">
-          <div class="ui radio checkbox">
-            <input type="radio" id="pick-{{eid}}-{{home.code}}" name="{{eid}}" value="{{home.code}}" checked="" tabindex="{{eid}}" class="hidden">
-            <label>{{home.name}} ({{home.code}})</label>
+          <div class="field {{isActive this}}">
+            <div class="ui radio checkbox">
+              <input type="radio"
+                id="pick-{{eid}}-{{home.code}}"
+                name="{{eid}}"
+                value="{{home.code}}"
+                checked=""
+                tabindex="{{eid}}"
+                class="hidden">
+              <label>{{home.name}} ({{home.code}}) {{isActive this}}</label>
+            </div>
           </div>
         </div>
         <div class="four wide column">
-          {{getOdds(this)}}
+          {{getOdds this}}
         </div>
       </div>
       {{/each}}
