@@ -8,10 +8,10 @@ countdown.start(function() {
     $('.menu .item').tab();
 
     Meteor.call('getGameData',function(response) {
-      Session.set('noRender', true);
-      Meteor.setTimeout(function() {
-        Session.set('noRender', false);
-      }, 1);
+      // Session.set('noRender', true);
+      // Meteor.setTimeout(function() {
+        // Session.set('noRender', false);
+      // }, 1);
     });
 });
 
@@ -22,10 +22,11 @@ Template.mainContent.helpers({
   },
   currentUser: function(){
     return Meteor.user();
-  },
-  'noRender': function() {
-      return Session.get('noRender');
   }
+  // ,
+  // 'noRender': function() {
+  //     return Session.get('noRender');
+  // }
 });
 
 
