@@ -67,6 +67,11 @@ Template.siteHeader.events({
     Meteor.call('addWeekToLegacyPicks', function(response) {
       console.log("response:", response);
     });
+  },
+  'click .resetUserPassword': function() {
+    Meteor.call('resetUserPassword', function(response) {
+      console.log("response:", response);
+    });
   }
 });
 
