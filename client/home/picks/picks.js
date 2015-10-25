@@ -17,21 +17,23 @@
     },
     isActive: function(game) {
       // Use eid to get game date string, add game time to end
-      var gameDateStr = game.eid.toString().substring(0, 8);
-          gameDateStr += '-' + game.gameTime + ' pm';
-      // Convert game date string to moment date
-      var gameDate = moment(gameDateStr, 'YYYYMMDD-h:mm a');
-      // Set expiry time to 1 hour before game time
-      var expiry = moment(gameDate).subtract(1, 'hours');
-      // Compare current time to expiry
-      if (moment().isBefore(expiry)) {
-      } else {
-        Meteor.setTimeout(function() {
-          document.getElementById("pick-"+game.eid+"-"+game.home.code).setAttribute("disabled", "disabled");
-          document.getElementById("pick-"+game.eid+"-"+game.away.code).setAttribute("disabled", "disabled");
-        }, 2000);
-      }
+      // var gameDateStr = game.eid.toString().substring(0, 8);
+      //     gameDateStr += '-' + game.gameTime + ' pm';
+      // // Convert game date string to moment date
+      // var gameDate = moment(gameDateStr, 'YYYYMMDD-h:mm a');
+      // // Set expiry time to 1 hour before game time
+      // var expiry = moment(gameDate).subtract(1, 'hours');
+      // // Compare current time to expiry
+      // if (moment().isBefore(expiry)) {
+      // } else {
+      //   Meteor.setTimeout(function() {
+      //     document.getElementById("pick-"+game.eid+"-"+game.home.code).setAttribute("disabled", "disabled");
+      //     document.getElementById("pick-"+game.eid+"-"+game.away.code).setAttribute("disabled", "disabled");
+      //   }, 2000);
+      // }
+      return "";
     }
+
   });
 
   Template.mainContentPicks.events({

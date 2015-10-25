@@ -33,3 +33,9 @@ From within dump folder (remote db is called "footballer"):
 `mongorestore --drop -d footballer meteor`
 
 ---
+
+#### Revert Code Changes to Commit
+```
+git revert --no-commit 0564c4..HEAD
+git commit
+```
